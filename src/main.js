@@ -7,7 +7,7 @@ import store from './store'
 import ElementUI from 'element-ui'
 
 // 引入主题文件
-import 'element-ui/lib/theme-chalk/index.css'
+// import 'element-ui/lib/theme-chalk/index.css'
 
 // 引入公共样式
 import '../src/styles/index.scss'
