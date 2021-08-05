@@ -1,9 +1,5 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <h1>少年郎教育</h1>
-      <el-button type="primary">主要按钮</el-button>
-    </div>
     <!-- 根路由出口 -->
     <router-view/>
   </div>
