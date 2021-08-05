@@ -1,5 +1,5 @@
 <template>
-  <div>首页</div>
+  <div>User</div>
 </template>
 
 <script>
