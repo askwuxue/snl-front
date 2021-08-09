@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const request = axios.create({
-  timeout: 2000
+  // timeout: 2000
 })
 
 // 获取baseURL
@@ -12,7 +12,7 @@ const getBaseURL = url => {
     return 'http://eduboss.lagou.com'
   }
 }
-
+// 设置拦截器
 request.interceptors.request.use(config => {
   // 根据config参数的url属性值动态设置baseURL
   config.baseURL = getBaseURL(config.url)
