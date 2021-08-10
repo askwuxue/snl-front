@@ -42,7 +42,7 @@ export default {
       isLoding: false,
       ruleForm: {
         phone: '17201234567',
-        password: '111111'
+        password: '123456'
       },
       rules: {
         phone: [
@@ -68,7 +68,7 @@ export default {
         // 请求数据的获取
         const { data } = await login(this.ruleForm)
         // 登录成功
-        if (data.state === 1) {
+        if (data.state === 206) {
           this.$message({
             message: '恭喜你，登录成功',
             type: 'success',
@@ -76,6 +76,8 @@ export default {
               this.isLoding = true
             }
           })
+          // 保存用户登录成功信息
+          this.$store.commit('setUser', data.message)
           this.$router.push({
             name: 'home'
           })
