@@ -41,8 +41,8 @@ export default {
       // 是否加载中
       isLoding: false,
       ruleForm: {
-        phone: '17201234567',
-        password: '123456'
+        phone: '18201288771',
+        password: '111111'
       },
       rules: {
         phone: [
@@ -68,7 +68,7 @@ export default {
         // 请求数据的获取
         const { data } = await login(this.ruleForm)
         // 登录成功
-        if (data.state === 206) {
+        if (data.state === 1) {
           this.$message({
             message: '恭喜你，登录成功',
             type: 'success',
@@ -78,9 +78,8 @@ export default {
           })
           // 保存用户登录成功信息
           this.$store.commit('setUser', data.message)
-          this.$router.push({
-            name: 'home'
-          })
+          // 根据当前路由的query参数redirect进行路由跳转
+          this.$router.push(this.$route.query.redirect || '/')
           // 登录失败
         } else {
           this.$message.error({
