@@ -13,7 +13,7 @@ export default new Vuex.Store({
     setUser (state, payload) {
       state.user = payload
       // 登录信息持久化处理
-      window.localStorage.setItem('user', payload)
+      window.localStorage.setItem('user', JSON.stringify(payload))
     }
   },
   // 接收异步请求，调用mutations
