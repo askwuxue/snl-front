@@ -77,13 +77,18 @@ const router = new VueRouter({
 
 // 前置路由守卫功能
 router.beforeEach((to, from, next) => {
+  // console.log('to: ', to)
   // to路由是否需要身份验证
   if (to.matched.some(record => record.meta.requireAuth)) {
     // 本地是否持久化了用户信息
     // TODO 当本地没有持久化用户信息时，用户信息还有可能保存在Vuex中，所以验证依旧会通过
     if (!store.state.user) {
       return next({
-        name: 'login'
+        name: 'login',
+        // 上次访问的页面的to路由的fullPath添加给登录页面的redirect，登录成功后拿到redirect进行页面路由跳转
+        query: {
+          redirect: to.fullPath
+        }
       })
     }
     return next()
