@@ -1,9 +1,11 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from '@/store'
 
 // 必须使用这种方式注册VueRouter
 Vue.use(VueRouter)
 
+// 路由规则
 const routes = [
   {
     path: '/login',
@@ -14,6 +16,10 @@ const routes = [
   },
   {
     path: '/',
+    meta: {
+      // 需要认证，如果一级路由设置meta中requireAuth为true，二级路由依旧遵守规则
+      requireAuth: true
+    },
     component: () => import(/* webpackChunkName: "layout" */'@/views/layout/index'),
     children: [
       {
@@ -57,11 +63,34 @@ const routes = [
         component: () => import(/* webpackChunkName: "user" */'@/views/user/index')
       }
     ]
+  },
+  {
+    path: '*',
+    name: '404_notfound',
+    component: () => import('@/views/error-page/index')
   }
 ]
 
 const router = new VueRouter({
   routes
+})
+
+// 前置路由守卫功能
+router.beforeEach((to, from, next) => {
+  // to路由是否需要身份验证
+  if (to.matched.some(record => record.meta.requireAuth)) {
+    // 本地是否持久化了用户信息
+    // TODO 当本地没有持久化用户信息时，用户信息还有可能保存在Vuex中，所以验证依旧会通过
+    if (!store.state.user) {
+      return next({
+        name: 'login'
+      })
+    }
+    return next()
+  } else {
+    console.log('不需要认证')
+  }
+  next()
 })
 
 export default router
