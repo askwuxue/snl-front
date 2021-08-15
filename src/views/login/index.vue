@@ -77,7 +77,7 @@ export default {
             }
           })
           // 保存用户登录成功信息
-          this.$store.commit('setUser', data.message)
+          this.$store.commit('setUser', data)
           // 根据当前路由的query参数redirect进行路由跳转
           this.$router.push(this.$route.query.redirect || '/')
           // 登录失败
