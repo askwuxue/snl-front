@@ -1,5 +1,8 @@
 import axios from 'axios'
 import store from '@/store'
+// 引入router
+import router from '@/router'
+import qs from 'querystring'
 // 单独引用Message组件
 import { Message } from 'element-ui'
 
@@ -25,7 +28,10 @@ request.interceptors.request.use(config => {
   }
   return config
 })
-
+// 如果存在多次请求，刷新token只需要一次即可
+let isRefreshing = false
+// 用户请求的数量不发生变化，只是刷新token的请求只有一次
+const requests = []
 // 设置响应拦截器
 request.interceptors.response.use(response => {
   // 请求成功 状态码为2XX
@@ -38,8 +44,55 @@ request.interceptors.response.use(response => {
     if (error.response.status === 400) {
       errorMessage = 'request params error'
     }
+    // 刷新token
     if (error.response.status === 401) {
-      errorMessage = 'Unauthorized'
+      // 不存在token
+      if (!store.state.user) {
+        router.push({
+          name: 'login',
+          query: {
+            redirect: router.currentRoute.redirect
+          }
+        })
+        return Promise.reject(error)
+      }
+      // 是否存在正在刷新token的请求
+      if (isRefreshing) {
+        // 将除第一个请求之外的其他请求暂时存储
+        return requests.push(() => {
+          request(error.config)
+        })
+      }
+      // 存在token但token过期或者不正确
+      // 发送请求刷新token
+      isRefreshing = true
+      return request({
+        method: 'POST',
+        url: '/front/user/refresh_token',
+        data: qs.stringify({
+          refreshtoken: JSON.parse(store.state.user.content).refresh_token
+        })
+      })
+        // token刷新成功
+        .then(res => {
+          // 更新token
+          store.commit('setUser', res.data)
+          // 第一个请求重新发送
+          request(error.config)
+          // 其他请求重新发送
+          while (requests.length) {
+            requests.pop()()
+          }
+          console.log('requests: ', requests)
+        })
+        // token刷新失败
+        .catch(error => {
+          console.log('error: ', error)
+        })
+        // 最终处理
+        .finally(() => {
+          isRefreshing = false
+        })
     }
     if (error.response.status === 403) {
       errorMessage = 'Forbidden'
