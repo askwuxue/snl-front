@@ -19,7 +19,10 @@
     </span>
     <el-dropdown-menu slot="dropdown">
       <el-dropdown-item>{{userInfo.userName}}</el-dropdown-item>
-      <el-dropdown-item divided>退出</el-dropdown-item>
+      <!-- 组件中不能直接使用原生标签的一些功能如click处理函数等 -->
+      <el-dropdown-item
+        divided
+        @click.native="handleLogout">退出</el-dropdown-item>
     </el-dropdown-menu>
 </el-dropdown>
   </div>
@@ -39,6 +42,7 @@ export default {
     this.loadingUserInfo()
   },
   methods: {
+    // 加载用户信息
     async loadingUserInfo () {
       // 错误处理
       try {
@@ -48,6 +52,28 @@ export default {
       } catch (err) {
         console.log('res: ', err)
       }
+    },
+    // 退出登录
+    handleLogout () {
+      this.$confirm('您将退出登录, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        // 使用store的mutation清除store的user数据
+        this.$store.commit('setUser', null)
+        // 页面重定向到登录页面
+        this.$router.push('login')
+        this.$message({
+          type: 'success',
+          message: '退出成功!'
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消退出'
+        })
+      })
     }
   }
 }
