@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import { getEditMenuInfo } from '@/interface/menu'
+import { getEditMenuInfo, createMenuList } from '@/interface/menu'
 export default {
   data () {
     return {
@@ -79,12 +79,22 @@ export default {
     async loadingMenuInfo () {
       const { data } = await getEditMenuInfo()
       this.parentMenuList = data.data.parentMenuList
-      console.log('this.parentMenuList: ', this.parentMenuList)
+      // console.log('this.parentMenuList: ', this.parentMenuList)
       // console.log('data: ', data)
     },
-    onSubmit () {
-      console.log('submit!')
-      console.log(this.form.parentId)
+    async onSubmit () {
+      // 1. 表单验证
+      // 2. 发送请求
+      const { data, data: { code } } = await createMenuList(this.form)
+      console.log('data: ', data)
+      if (code === '000000') {
+        this.$message.success('添加菜单成功')
+        this.$router.push({
+          path: '/menu'
+        })
+      } else {
+        this.$message.error('添加菜单失败')
+      }
     }
   }
 }
