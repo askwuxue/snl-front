@@ -10,3 +10,12 @@ export const getEditMenuInfo = (id = -1) => {
     }
   })
 }
+
+// 添加菜单
+export const createMenuList = data => {
+  return request({
+    method: 'POST',
+    url: '/boss/menu/saveOrUpdate',
+    data
+  })
+}
