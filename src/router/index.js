@@ -52,11 +52,17 @@ const routes = [
         name: 'menu',
         component: () => import(/* webpackChunkName: "menu" */'@/views/menu/index')
       },
-      // 创建菜单列表
+      // 创建菜单
       {
         path: '/menu/create',
         name: 'menu-create',
         component: () => import(/* webpackChunkName: "menu-create" */'@/views/menu/create')
+      },
+      // 编辑菜单
+      {
+        path: '/menu/edit',
+        name: 'menu-edit',
+        component: () => import(/* webpackChunkName: "menu-edit" */'@/views/menu/edit')
       },
       {
         path: '/resource',
