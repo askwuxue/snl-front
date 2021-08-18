@@ -60,7 +60,7 @@ export default {
     // 跳转跳转到create-menu
     handleCreate () {
       this.$router.push({
-        name: 'menu-create'
+        path: '/menu/create'
       })
     },
 
@@ -78,9 +78,9 @@ export default {
 
     // 编辑菜单项
     handleEdit (e, index, row) {
-      console.log('row: ', row)
-      console.log('index: ', index)
+      this.$router.push({ path: '/menu/edit' })
       e.preventDefault()
+      // console.log('row: ', row)
       // console.log('e: ', e)
     },
 
