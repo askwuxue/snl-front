@@ -44,7 +44,7 @@
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="onSubmit">提交</el-button>
-          <el-button>重置</el-button>
+          <el-button v-if="!isEdit">重置</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -77,29 +77,39 @@ export default {
       }
     }
   },
+
   // 加载页面时获取编辑菜单页面信息
   created () {
     this.loadingMenuInfo()
   },
   methods: {
     async loadingMenuInfo () {
-      const { data } = await getEditMenuInfo()
-      this.parentMenuList = data.data.parentMenuList
-      // console.log('this.parentMenuList: ', this.parentMenuList)
-      // console.log('data: ', data)
+      // 获取动态路由传递的参数
+      const id = this.$route.params.id
+      // 根据动态路由的参数获取编辑菜单信息，默认参数为-1
+      const { data: { data: { parentMenuList, menuInfo } }, data: { code } } = await getEditMenuInfo(id)
+      // 编辑菜单
+      if (this.isEdit) {
+        // 请求数据成功
+        if (code === '000000') {
+          this.form = menuInfo
+        }
+        // 添加菜单
+      } else {
+        this.parentMenuList = parentMenuList
+      }
     },
     async onSubmit () {
       // 1. 表单验证
       // 2. 发送请求
-      const { data, data: { code } } = await createMenuList(this.form)
-      console.log('data: ', data)
+      const { data: { code, mesg } } = await createMenuList(this.form)
       if (code === '000000') {
         this.$message.success('添加菜单成功')
         this.$router.push({
           path: '/menu'
         })
       } else {
-        this.$message.error('添加菜单失败')
+        this.$message.error(`添加菜单失败,${mesg}`)
       }
     }
   }
