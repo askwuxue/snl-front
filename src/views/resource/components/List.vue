@@ -62,11 +62,11 @@
         <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
-          :current-page="form.currentPage"
-          :page-sizes="[10, 50, 200, 500]"
-          :page-size="10"
+          :current-page="form.current"
+          :page-sizes="[form.size, 50, 200, 500]"
+          :page-size="form.size"
           layout="total, sizes, prev, pager, next, jumper"
-          :total="400">
+          :total="form.total">
         </el-pagination>
       </div>
     </el-card>
@@ -82,7 +82,12 @@ export default {
       form: {
         user: '',
         region: '',
-        currentPage: 1
+        // 当前页
+        current: 1,
+        // 每页显示的数量
+        size: 10,
+        // 资源总数
+        total: 0
       },
       resourceData: []
     }
@@ -94,32 +99,37 @@ export default {
 
     // 按条件分页查询资源
     async loadingResource () {
-      const { data: { data, code, data: { records } } } = await getResourcePages()
+      const { data: { code, data: { records, total } } } = await getResourcePages({ size: this.form.size, current: this.form.current })
       // 数据请求成功
       if (code === '000000') {
+        // 资源列表
         this.resourceData = records
+        // 资源总数
+        this.form.total = total
       }
-      console.log('data: ', data)
     },
 
     // 编辑资源
     handleEdit (row) {
-      console.log('row: ', row)
+      // console.log('row: ', row)
     },
 
     // 删除资源
     handleDelete (row) {
-      console.log('row: ', row)
+      // console.log('row: ', row)
     },
 
     // 改变每页显示页数触发函数
     handleSizeChange (val) {
-      console.log(`每页 ${val} 条`)
+      this.form.size = val
+      this.form.current = 1
+      this.loadingResource()
     },
 
     // 改变当前显示页数触发函数
     handleCurrentChange (val) {
-      console.log(`当前页: ${val}`)
+      this.form.current = val
+      this.loadingResource()
     }
   }
 }
