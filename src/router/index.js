@@ -60,7 +60,7 @@ const routes = [
       },
       // 编辑菜单
       {
-        path: '/menu/edit',
+        path: '/menu/edit/:id',
         name: 'menu-edit',
         component: () => import(/* webpackChunkName: "menu-edit" */'@/views/menu/edit')
       },
