@@ -3,12 +3,12 @@
     <el-card class="box-card">
       <!-- header -->
       <div slot="header" class="clearfix">
-       <el-form :inline="true" :model="formInline" class="demo-form-inline">
+       <el-form :inline="true" :model="form" class="demo-form-inline">
         <el-form-item label="审批人">
-          <el-input v-model="formInline.user" placeholder="审批人"></el-input>
+          <el-input v-model="form.user" placeholder="审批人"></el-input>
         </el-form-item>
         <el-form-item label="活动区域">
-          <el-select v-model="formInline.region" placeholder="活动区域">
+          <el-select v-model="form.region" placeholder="活动区域">
             <el-option label="区域一" value="shanghai"></el-option>
             <el-option label="区域二" value="beijing"></el-option>
           </el-select>
@@ -58,6 +58,17 @@
           </el-table-column>
         </el-table>
       </div>
+      <div class="block">
+        <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="form.currentPage"
+          :page-sizes="[10, 50, 200, 500]"
+          :page-size="10"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="400">
+        </el-pagination>
+      </div>
     </el-card>
   </div>
 </template>
@@ -68,33 +79,19 @@ export default {
   name: 'ResourceList',
   data () {
     return {
-      formInline: {
+      form: {
         user: '',
-        region: ''
+        region: '',
+        currentPage: 1
       },
-      resourceData: [{
-        date: '2016-05-02',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        date: '2016-05-04',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1517 弄'
-      }, {
-        date: '2016-05-01',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1519 弄'
-      }, {
-        date: '2016-05-03',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1516 弄'
-      }]
+      resourceData: []
     }
   },
   created () {
     this.loadingResource()
   },
   methods: {
+
     // 按条件分页查询资源
     async loadingResource () {
       const { data: { data, code, data: { records } } } = await getResourcePages()
@@ -113,6 +110,16 @@ export default {
     // 删除资源
     handleDelete (row) {
       console.log('row: ', row)
+    },
+
+    // 改变每页显示页数触发函数
+    handleSizeChange (val) {
+      console.log(`每页 ${val} 条`)
+    },
+
+    // 改变当前显示页数触发函数
+    handleCurrentChange (val) {
+      console.log(`当前页: ${val}`)
     }
   }
 }
