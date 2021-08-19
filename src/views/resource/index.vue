@@ -1,9 +1,16 @@
 <template>
-  <div>首页</div>
+  <div>
+    <resource-list></resource-list>
+  </div>
 </template>
 
 <script>
-export default {}
+import ResourceList from './components/List'
+export default {
+  components: {
+    ResourceList
+  }
+}
 </script>
 
 <style lang="sass" scoped>
