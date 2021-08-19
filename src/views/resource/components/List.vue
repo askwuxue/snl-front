@@ -1,0 +1,149 @@
+<template>
+  <div>
+    <el-card class="box-card">
+      <!-- header -->
+      <div slot="header" class="clearfix">
+       <el-form :inline="true" :model="formInline" class="demo-form-inline">
+        <el-form-item label="审批人">
+          <el-input v-model="formInline.user" placeholder="审批人"></el-input>
+        </el-form-item>
+        <el-form-item label="活动区域">
+          <el-select v-model="formInline.region" placeholder="活动区域">
+            <el-option label="区域一" value="shanghai"></el-option>
+            <el-option label="区域二" value="beijing"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="onSubmit">查询</el-button>
+        </el-form-item>
+      </el-form>
+      </div>
+      <!-- body -->
+      <div>
+        <el-table
+          :data="resourceData"
+          style="width: 100%">
+          <el-table-column
+            type="index"
+            label="编号"
+            width="180">
+          </el-table-column>
+          <el-table-column
+            prop="name"
+            label="资源名称"
+            width="180">
+          </el-table-column>
+          <el-table-column
+            prop="url"
+            label="资源路径"
+            width="180">
+          </el-table-column>
+          <el-table-column
+            prop="description"
+            label="描述">
+          </el-table-column>
+          <el-table-column
+            label="添加时间">
+            <template slot-scope="scope">
+              <span>{{scope.row.createdTime | formatDate}}</span>
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="address"
+            label="操作">
+            <template slot-scope="scope">
+              <el-button type="primary" size="small" @click="handleEdit(scope.row)">编辑</el-button>
+              <el-button type="danger" size="small" @click="handleDelete(scope.row)">删除</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
+    </el-card>
+  </div>
+</template>
+
+<script>
+import { getResourcePages } from '@/interface/resource'
+export default {
+  name: 'ResourceList',
+  data () {
+    return {
+      formInline: {
+        user: '',
+        region: ''
+      },
+      resourceData: [{
+        date: '2016-05-02',
+        name: '王小虎',
+        address: '上海市普陀区金沙江路 1518 弄'
+      }, {
+        date: '2016-05-04',
+        name: '王小虎',
+        address: '上海市普陀区金沙江路 1517 弄'
+      }, {
+        date: '2016-05-01',
+        name: '王小虎',
+        address: '上海市普陀区金沙江路 1519 弄'
+      }, {
+        date: '2016-05-03',
+        name: '王小虎',
+        address: '上海市普陀区金沙江路 1516 弄'
+      }]
+    }
+  },
+  created () {
+    this.loadingResource()
+  },
+  methods: {
+    // 按条件分页查询资源
+    async loadingResource () {
+      const { data: { data, code, data: { records } } } = await getResourcePages()
+      // 数据请求成功
+      if (code === '000000') {
+        this.resourceData = records
+      }
+      console.log('data: ', data)
+    },
+
+    // 编辑资源
+    handleEdit (row) {
+      console.log('row: ', row)
+    },
+
+    // 删除资源
+    handleDelete (row) {
+      console.log('row: ', row)
+    }
+  }
+}
+</script>
+
+<style>
+  .text {
+    font-size: 14px;
+  }
+
+  .item {
+    margin-bottom: 18px;
+  }
+
+  .clearfix:before,
+  .clearfix:after {
+    display: table;
+    content: "";
+  }
+  .clearfix:after {
+    clear: both
+  }
+
+  /* .box-card {
+    width: 480px;
+  } */
+
+  /* 自定义属性 */
+  .el-main {
+    text-align: left !important;
+    line-height: 100% !important;
+  }
+
+</style>
