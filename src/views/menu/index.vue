@@ -78,10 +78,9 @@ export default {
 
     // 编辑菜单项
     handleEdit (e, index, row) {
-      this.$router.push({ path: '/menu/edit' })
+      const { id } = row
+      this.$router.push({ path: `/menu/edit/${id}` })
       e.preventDefault()
-      // console.log('row: ', row)
-      // console.log('e: ', e)
     },
 
     // 删除菜单项
