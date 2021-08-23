@@ -1,9 +1,16 @@
 <template>
-  <div>rol</div>
+  <div>
+    <role-list></role-list>
+  </div>
 </template>
 
 <script>
-export default {}
+import roleList from './components/List'
+export default {
+  components: {
+    roleList
+  }
+}
 </script>
 
 <style lang="sass" scoped>
