@@ -63,14 +63,17 @@ export default {
     }
   },
   created () {
-    this.loadingRole()
+    // 当处于编辑状态时请求数据
+    if (this.isEdit) {
+      this.loadingRole()
+    }
   },
   methods: {
 
     // 点击dialog确定 确认添加数据或者更新数据
     async handleCreate () {
       const { data: { code } } = await saveOrUpdate(this.role)
-      console.log('this.isEdit: ', this.isEdit)
+      // console.log('this.isEdit: ', this.isEdit)
       if (this.isEdit) {
         if (code === '000000') {
           this.$message({
