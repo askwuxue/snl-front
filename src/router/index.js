@@ -64,6 +64,14 @@ const routes = [
         name: 'menu-edit',
         component: () => import(/* webpackChunkName: "menu-edit" */'@/views/menu/edit')
       },
+      // 分配菜单路由组件
+      {
+        path: '/role/alloc-menu/:roleId',
+        name: 'alloc-menu',
+        component: () => import(/* webpackChunkName: "alloc-menu" */'@/views/role/allocMenu'),
+        // TODO 允许使用props的方式传递路由参数
+        props: true
+      },
       {
         path: '/resource',
         name: 'resource',
