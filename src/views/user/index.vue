@@ -1,9 +1,17 @@
 <template>
-  <div>User</div>
+  <div>
+    <user-list></user-list>
+  </div>
 </template>
 
 <script>
-export default {}
+import userList from './components/userList'
+export default {
+  name: 'user',
+  components: {
+    userList
+  }
+}
 </script>
 
 <style lang="sass" scoped>
