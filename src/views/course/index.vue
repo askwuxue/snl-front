@@ -1,9 +1,17 @@
 <template>
-  <div>首页</div>
+  <div>
+    <course-list></course-list>
+  </div>
 </template>
 
 <script>
-export default {}
+import courseList from './components/courseList'
+export default {
+  name: 'course',
+  components: {
+    courseList
+  }
+}
 </script>
 
 <style lang="sass" scoped>
