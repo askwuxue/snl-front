@@ -29,6 +29,7 @@
     </el-card>
     <!-- 查询结果 -->
     <el-card>
+      <el-button @click="createCourse">添加课程</el-button>
       <div slot="header" class="clearfix">
         <span>查询结果</span>
       </div>
@@ -93,6 +94,7 @@
 
 <script>
 import { getQueryCourses, changeState } from '@/interface/course'
+import createCourse from '../create.vue'
 export default {
   name: 'courseList',
   data () {
@@ -184,6 +186,16 @@ export default {
       } else {
 
       }
+    },
+
+    // 添加课程
+    createCourse () {
+      this.$router.push({
+        path: '/course/create',
+        components: {
+          createCourse
+        }
+      })
     }
   }
 }
