@@ -48,6 +48,11 @@ const routes = [
         component: () => import(/* webpackChunkName: "course" */'@/views/course/index')
       },
       {
+        path: '/course/create',
+        name: 'course-crate',
+        component: () => import(/* webpackChunkName: "course-create" */'@/views/course/create')
+      },
+      {
         path: '/menu',
         name: 'menu',
         component: () => import(/* webpackChunkName: "menu" */'@/views/menu/index')
