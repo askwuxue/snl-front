@@ -17,3 +17,12 @@ export const changeState = data => {
     params: data
   })
 }
+
+// 保存或者更新课程信息
+export const saveOrUpdateCourse = data => {
+  return request({
+    method: 'POST',
+    url: '/boss/course/saveOrUpdateCourse',
+    data
+  })
+}
