@@ -58,35 +58,16 @@
             </el-form-item>
           </div>
           <div v-show="activeStep === 2">
-            <h3>课程封面</h3>
-            <el-form-item label="课程封面">
-              <el-upload
-                class="avatar-uploader"
-                action="https://jsonplaceholder.typicode.com/posts/"
-                :show-file-list="false"
-                :on-success="handleAvatarSuccess">
-                <img v-if="imageUrl" :src="imageUrl" class="avatar">
-                <i v-else class="avatar-uploader-icon">
-                <el-button size="small" type="primary">点击上传</el-button>
-                </i>
-                <!-- <el-button size="small" type="primary">点击上传</el-button> -->
-              </el-upload>
-              <!-- <el-input v-model="course.name"></el-input> -->
-            </el-form-item>
-            <el-form-item label="解锁封面">
-              <el-upload
-                class="avatar-uploader"
-                action="https://jsonplaceholder.typicode.com/posts/"
-                :show-file-list="false"
-                :on-success="handleAvatarSuccess"
-                >
-                <!-- :before-upload="beforeAvatarUpload" -->
-                <img v-if="imageUrl2" :src="imageUrl" class="avatar">
-                <i v-else class="avatar-uploader-icon">
-                <el-button size="small" type="primary">点击上传</el-button>
-                </i>
-              </el-upload>
-            </el-form-item>
+            <h3>封面</h3>
+            <!-- 图片上传组件 -->
+            <course-img
+              v-model="course.courseListImg"
+              label="课程封面"
+              :limit="3"></course-img>
+            <course-img
+              v-model="course.courseImgUrl"
+              label="解锁封面"
+              :limit="3"></course-img>
           </div>
           <div v-show="activeStep === 3">
             <h3>销售信息</h3>
@@ -163,8 +144,12 @@
 
 <script>
 import { saveOrUpdateCourse } from '@/interface/course'
+import CourseImg from './components/courseImg'
 export default {
   name: 'createCourse',
+  components: {
+    CourseImg
+  },
   data () {
     return {
       // 步骤信息
@@ -191,7 +176,7 @@ export default {
         }
       ],
       // 图片预览
-      imageUrl: 'https://edu-lagou.oss-cn-beijing.aliyuncs.com/images/2020/07/10/15943594999396473.png',
+      imageUrl: '',
       imageUrl2: '',
       // 课程信息
       course: {
@@ -213,7 +198,9 @@ export default {
         discountsTag: '',
         isNew: true,
         isNewDes: '',
+        // 课程封面地址
         courseListImg: '',
+        // 课程解锁封面地址
         courseImgUrl: '',
         sortNum: 0,
         previewFirstField: '',
@@ -276,23 +263,6 @@ export default {
       this.activeStep = ++index
     },
 
-    handleAvatarSuccess (res, file) {
-      console.log('file: ', file)
-      this.imageUrl = URL.createObjectURL(file.raw)
-    },
-    beforeAvatarUpload (file) {
-      const isJPG = file.type === 'image/jpeg'
-      const isLt2M = file.size / 1024 / 1024 < 2
-
-      if (!isJPG) {
-        this.$message.error('上传头像图片只能是 JPG 格式!')
-      }
-      if (!isLt2M) {
-        this.$message.error('上传头像图片大小不能超过 2MB!')
-      }
-      return isJPG && isLt2M
-    },
-
     // 保存或者更新课程信息
     async loadingCourse () {
       const data = await saveOrUpdateCourse()
@@ -303,34 +273,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// TODO 当 <style> 标签有 scoped 属性时，它的 CSS 只作用于当前组件中的元素
 .el-step {
   cursor: pointer;
 }
-// 头像
-// TODO 深度作用选择器
-::v-deep .avatar-uploader .el-upload {
-    border: 1px dashed #d9d9d9;
-    border-radius: 6px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-  }
-::v-deep .avatar-uploader .el-upload:hover {
-    border-color: #409EFF;
-  }
-  .avatar-uploader-icon {
-    display: inline-block;
-    font-size: 28px;
-    color: #8c939d;
-    width: 178px;
-    height: 178px;
-    line-height: 178px;
-    text-align: center;
-  }
-  .avatar {
-    width: 178px;
-    height: 178px;
-    display: block;
-  }
 </style>
