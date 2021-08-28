@@ -26,3 +26,12 @@ export const saveOrUpdateCourse = data => {
     data
   })
 }
+
+// 上传图片
+export const uploadImg = data => {
+  return request({
+    method: 'POST',
+    url: '/boss/course/upload',
+    data
+  })
+}
