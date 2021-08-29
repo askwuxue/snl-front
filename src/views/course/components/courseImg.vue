@@ -1,11 +1,19 @@
 <template>
   <div>
     <el-form-item :label="label">
+      <el-progress
+      v-if="isUploading"
+      type="circle"
+      :percentage="percentage"
+      :status="percentage === 100 ? 'success' : undefined"
+      :width="178"></el-progress>
       <el-upload
+        v-else
         class="avatar-uploader"
+        action=""
         :before-upload="beforeAvatarUpload"
         :show-file-list="false"
-        :http-request="uploadImg">
+        :http-request="uploadingImg">
         <img v-if="value" :src="value" class="avatar">
         <i v-else class="avatar-uploader-icon">
         <el-button size="small" type="primary">点击上传</el-button>
@@ -32,6 +40,14 @@ export default {
       default: 2
     }
   },
+  data () {
+    return {
+      // 是否正在上传
+      isUploading: false,
+      // 上传进度
+      percentage: 0
+    }
+  },
   methods: {
     // 上传文件之前的钩子
     beforeAvatarUpload (file) {
@@ -44,7 +60,8 @@ export default {
       if (isLimit) {
         this.$message.error('上传头像图片大小不能超过 2MB!')
       }
-      return isLimit
+      // TODO 返回false http-request属性不会生效
+      return !isLimit
     },
 
     // // 文件上传成功钩子
@@ -54,13 +71,20 @@ export default {
     // },
 
     // 图片上传功能 覆盖upload组件的图片上传
-    async uploadImg (options) {
+    async uploadingImg (options) {
+      // console.log('options: ', options)
+      this.isUploading = true
       const { file } = options
       const formData = new FormData()
       formData.append('file', file)
-      const { data: { code, data, mesg } } = await uploadImg(formData)
+      const { data: { code, data, mesg } } = await uploadImg(formData, event => {
+        // console.log('event: ', event)
+        this.percentage = Math.floor((event.loaded / event.total) * 100)
+      })
       // 图片上传成功
       if (code === '000000') {
+        this.isUploading = false
+        this.percentage = 0
         // this.course.courseListImg = data.name
         // 出发自定义事件和父组件的绑定的v-model通信
         this.$emit('input', data.name)
@@ -99,5 +123,11 @@ export default {
     width: 178px;
     height: 178px;
     display: block;
+  }
+
+  // 进度条自定义样式
+  .percentage {
+    width: 178px;
+    height: 178px;
   }
 </style>
