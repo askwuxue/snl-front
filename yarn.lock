@@ -864,10 +864,25 @@
     "@babel/types" "^7.4.4"
     esutils "^2.0.2"
 
+"@babel/runtime-corejs3@^7.11.2":
+  version "7.15.3"
+  resolved "https://registry.nlark.com/@babel/runtime-corejs3/download/@babel/runtime-corejs3-7.15.3.tgz#28754263988198f2a928c09733ade2fb4d28089d"
+  integrity sha1-KHVCY5iBmPKpKMCXM63i+00oCJ0=
+  dependencies:
+    core-js-pure "^3.16.0"
+    regenerator-runtime "^0.13.4"
+
 "@babel/runtime@^7.11.0", "@babel/runtime@^7.8.4":
   version "7.14.8"
   resolved "https://registry.nlark.com/@babel/runtime/download/@babel/runtime-7.14.8.tgz#7119a56f421018852694290b9f9148097391b446"
   integrity sha1-cRmlb0IQGIUmlCkLn5FICXORtEY=
+  dependencies:
+    regenerator-runtime "^0.13.4"
+
+"@babel/runtime@^7.11.2":
+  version "7.15.3"
+  resolved "https://registry.nlark.com/@babel/runtime/download/@babel/runtime-7.15.3.tgz#2e1c2880ca118e5b2f9988322bd8a7656a32502b"
+  integrity sha1-LhwogMoRjlsvmYgyK9inZWoyUCs=
   dependencies:
     regenerator-runtime "^0.13.4"
 
@@ -2844,6 +2859,11 @@ core-js-compat@^3.14.0, core-js-compat@^3.16.0, core-js-compat@^3.6.5:
   dependencies:
     browserslist "^4.16.6"
     semver "7.0.0"
+
+core-js-pure@^3.16.0:
+  version "3.16.3"
+  resolved "https://registry.nlark.com/core-js-pure/download/core-js-pure-3.16.3.tgz?cache=0&sync_timestamp=1629836319157&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fcore-js-pure%2Fdownload%2Fcore-js-pure-3.16.3.tgz#41ccb9b6027535f8dd51a0af004c1c7f0a8c9ca7"
+  integrity sha1-Qcy5tgJ1NfjdUaCvAEwcfwqMnKc=
 
 core-js@^2.4.0:
   version "2.6.12"
@@ -8596,6 +8616,11 @@ tslib@^1.9.0:
   resolved "https://registry.nlark.com/tslib/download/tslib-1.14.1.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.nlark.com%2Ftslib%2Fdownload%2Ftslib-1.14.1.tgz#cf2d38bdc34a134bcaf1091c41f6619e2f672d00"
   integrity sha1-zy04vcNKE0vK8QkcQfZhni9nLQA=
 
+tslib@^2.1.0:
+  version "2.3.1"
+  resolved "https://registry.nlark.com/tslib/download/tslib-2.3.1.tgz#e8a335add5ceae51aa261d32a490158ef042ef01"
+  integrity sha1-6KM1rdXOrlGqJh0ypJAVjvBC7wE=
+
 tty-browserify@0.0.0:
   version "0.0.0"
   resolved "https://registry.npm.taobao.org/tty-browserify/download/tty-browserify-0.0.0.tgz#a157ba402da24e9bf957f9aa69d524eed42901a6"
@@ -8960,6 +8985,15 @@ vuex@^3.6.2:
   version "3.6.2"
   resolved "https://registry.nlark.com/vuex/download/vuex-3.6.2.tgz#236bc086a870c3ae79946f107f16de59d5895e71"
   integrity sha1-I2vAhqhww655lG8QfxbeWdWJXnE=
+
+wangeditor@^4.7.7:
+  version "4.7.7"
+  resolved "https://registry.nlark.com/wangeditor/download/wangeditor-4.7.7.tgz#3d600f3cbecde78f8177830d6cb081db1fa7c19a"
+  integrity sha1-PWAPPL7N54+Bd4MNbLCB2x+nwZo=
+  dependencies:
+    "@babel/runtime" "^7.11.2"
+    "@babel/runtime-corejs3" "^7.11.2"
+    tslib "^2.1.0"
 
 watchpack-chokidar2@^2.0.1:
   version "2.0.1"
