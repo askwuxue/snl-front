@@ -72,8 +72,8 @@
         </el-table-column>
         <el-table-column
           label="操作">
-          <template>
-            <el-button>编辑</el-button>
+          <template slot-scope="scope">
+            <el-button @click="editCourse(scope.row)">编辑</el-button>
             <el-button>内容管理</el-button>
           </template>
         </el-table-column>
@@ -194,6 +194,17 @@ export default {
         path: '/course/create',
         components: {
           createCourse
+        }
+      })
+    },
+
+    // 编辑课程信息
+    editCourse ({ id }) {
+      console.log('id: ', id)
+      this.$router.push({
+        name: 'course-edit',
+        params: {
+          courseId: id
         }
       })
     }
