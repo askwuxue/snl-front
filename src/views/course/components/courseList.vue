@@ -74,7 +74,7 @@
           label="操作">
           <template slot-scope="scope">
             <el-button @click="editCourse(scope.row)">编辑</el-button>
-            <el-button>内容管理</el-button>
+            <el-button @click="courseManage(scope.row)">内容管理</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -200,9 +200,18 @@ export default {
 
     // 编辑课程信息
     editCourse ({ id }) {
-      console.log('id: ', id)
       this.$router.push({
         name: 'course-edit',
+        params: {
+          courseId: id
+        }
+      })
+    },
+
+    // 课程管理
+    courseManage ({ id }) {
+      this.$router.push({
+        name: 'course-section',
         params: {
           courseId: id
         }
