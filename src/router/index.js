@@ -60,6 +60,13 @@ const routes = [
         props: true,
         component: () => import(/* webpackChunkName: "course-edit" */'@/views/course/edit')
       },
+      // 课程管理
+      {
+        path: '/course/section/:courseId',
+        name: 'course-section',
+        props: true,
+        component: () => import(/* webpackChunkName: "course-section" */'@/views/course/section')
+      },
       {
         path: '/menu',
         name: 'menu',
