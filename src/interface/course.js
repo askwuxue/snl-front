@@ -58,3 +58,21 @@ export const getSectionAndLesson = courseId => {
     }
   })
 }
+
+// saveOrUpdateSection
+export const saveOrUpdateSection = data => {
+  return request({
+    method: 'POST',
+    url: '/boss/course/section/saveOrUpdateSection',
+    data
+  })
+}
+
+// 保存或更新课时
+export const saveOrUpdate = data => {
+  return request({
+    method: 'POST',
+    url: '/boss/course/lesson/saveOrUpdate',
+    data
+  })
+}
