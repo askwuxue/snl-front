@@ -4,7 +4,9 @@
       <el-tree
       :data="data"
       :props="defaultProps"
-      draggable>
+      draggable
+      :allow-drop="handleAllowDrop"
+      @node-drop="handleNodeDrop">
       <span class="custom-tree-node" slot-scope="{ node, data }">
         <span>{{ node.label }}</span>
         <span v-if="data.sectionName">
@@ -52,7 +54,7 @@
 </template>
 
 <script>
-import { getSectionAndLesson } from '@/interface/course'
+import { getSectionAndLesson, saveOrUpdate, saveOrUpdateSection } from '@/interface/course'
 export default {
   name: 'courseSection',
   props: {
@@ -85,6 +87,44 @@ export default {
         this.data = data
         // TODO 加载失败F
       } else {}
+    },
+
+    // 拖拽判断 只允许在同一个父极下兄弟位置间拖动
+    handleAllowDrop (draggingNode, dropNode, type) {
+      const draggingId = draggingNode.data.sectionId
+      const dropingId = dropNode.data.sectionId
+      return type !== 'inner' && (draggingId === dropingId)
+    },
+
+    // 拖拽成功完成时触发的事件
+    async handleNodeDrop (draggNode, dropNode) {
+      try {
+        await Promise.all(dropNode.parent.childNodes.map(async (item, index) => {
+        // 当前拖动的是课时
+          if (draggNode.data.sectionId) {
+            // 返回Promise对象
+            return saveOrUpdate({
+              id: item.data.id,
+              orderNum: index
+            })
+          // 当前拖动的是章节
+          } else {
+            return saveOrUpdateSection({
+              id: item.data.id,
+              orderNum: index
+            })
+          }
+        }))
+        this.$message({
+          type: 'success',
+          message: '保存成功'
+        })
+      } catch (error) {
+        this.$message({
+          type: 'error',
+          message: '保存失败'
+        })
+      }
     }
   }
 }
