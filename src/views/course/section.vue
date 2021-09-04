@@ -38,7 +38,7 @@
           <el-button
             type="primary"
             size="mini"
-            @click="() => remove(node, data)">
+            @click="() => uploadVideo(node, data)">
             上传视频
           </el-button>
           <el-button
@@ -125,6 +125,20 @@ export default {
           message: '保存失败'
         })
       }
+    },
+
+    // 上传视频
+    uploadVideo (node, data) {
+      console.log('data: ', data)
+      this.$router.push({
+        name: 'course-video',
+        params: {
+          courseId: data.courseId
+        },
+        query: {
+          lessonId: data.id
+        }
+      })
     }
   }
 }
