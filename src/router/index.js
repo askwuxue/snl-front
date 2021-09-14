@@ -124,7 +124,6 @@ const router = new VueRouter({
 
 // 前置路由守卫功能
 router.beforeEach((to, from, next) => {
-  // console.log('to: ', to)
   // to路由是否需要身份验证
   if (to.matched.some(record => record.meta.requireAuth)) {
     // 本地是否持久化了用户信息
