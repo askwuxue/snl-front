@@ -43,7 +43,13 @@
 
 <script>
 export default {
-  name: 'AppAside'
+  name: 'AppAside',
+  methods: {
+    handleOpen () {
+    },
+    handleClose () {
+    }
+  }
 }
 </script>
 

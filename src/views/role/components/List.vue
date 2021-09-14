@@ -171,7 +171,11 @@ export default {
     // dialog 取消
     handleCancel () {
       this.dialogFormVisible = false
-    }
+    },
+
+    onSubmit () {},
+
+    onReset () {}
   }
 }
 </script>

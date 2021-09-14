@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form :model="form">
+    <el-form :model="role">
         <el-form-item
         label="角色名称"
         :label-width="formLabelWidth">
@@ -51,6 +51,7 @@ export default {
   data () {
     return {
       dialogFormVisible: false,
+      formLabelWidth: '80',
       // 角色信息
       role: {
         id: '',
@@ -111,7 +112,11 @@ export default {
     handleCancel () {
       this.$emit('cancel')
       // TODO 编辑状态下点击取消 role数据清空或者重新加载，之间的role数据不留存
-      this.loadingRole()
+      if (this.isEdit) {
+        this.loadingRole()
+      }
+      // TODO 清空dialog的内容
+      this.role = {}
     },
 
     // 加载角色
