@@ -54,12 +54,18 @@
           <!-- TODO 封禁用户 -->
           <el-table-column
             prop="status"
-            v-model="status"
             label="状态">
-            <el-switch
-              active-color="#13ce66"
-              inactive-color="#ff4949">
-            </el-switch>
+            <template slot-scope="scope">
+              <el-switch
+                v-model="scope.row.status"
+                active-color="#13ce66"
+                inactive-color="#ff4949"
+                :active-value="1"
+                :inactive-value="0"
+                :disabled="scope.row.isLoadingStatus"
+                @change="changeState(scope.row)">
+              </el-switch>
+            </template>
           </el-table-column>
           <el-table-column
             label="操作">
@@ -196,7 +202,11 @@ export default {
 
       }
       this.dialogVisible = false
-    }
+    },
+
+    handleClose () {},
+
+    changeState () {}
   }
 }
 </script>
