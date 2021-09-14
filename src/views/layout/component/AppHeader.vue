@@ -13,7 +13,6 @@
     <span class="el-dropdown-link">
       <!-- 用户头像 -->
       <el-avatar
-      :size="size"
       :src="userInfo.portrait || 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'"></el-avatar>
       <i class="el-icon-arrow-down el-icon--right"></i>
     </span>
@@ -34,7 +33,7 @@ export default {
   name: 'AppHeader',
   data () {
     return {
-      userInfo: null
+      userInfo: {}
     }
   },
   // 生命周期函数中不处理具体的业务逻辑
@@ -49,8 +48,18 @@ export default {
         // 获取数据成功
         const { data } = await getUserInfo()
         this.userInfo = data.content
+        // TODO token过期，重新登录
       } catch (err) {
-        console.log('res: ', err)
+        this.$message({
+          type: 'error',
+          message: '获取用户信息失败，请重新登录'
+        })
+        this.$router.push({
+          name: 'login',
+          query: {
+            redirect: this.$route.fullPath
+          }
+        })
       }
     },
     // 退出登录

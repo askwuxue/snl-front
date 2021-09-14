@@ -6,7 +6,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     // 登录成功后保存用户信息
-    user: JSON.parse(window.localStorage.getItem('user')) || null
+    // TODO 保证数据是JSON安全
+    user: JSON.parse(window.localStorage.getItem('user') || null)
   },
   // 处理state的同步请求并处理state
   mutations: {
