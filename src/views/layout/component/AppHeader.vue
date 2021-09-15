@@ -13,7 +13,7 @@
     <span class="el-dropdown-link">
       <!-- 用户头像 -->
       <el-avatar
-      :src="userInfo.portrait || 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'"></el-avatar>
+      :src="userInfo.portrait"></el-avatar>
       <i class="el-icon-arrow-down el-icon--right"></i>
     </span>
     <el-dropdown-menu slot="dropdown">
@@ -33,7 +33,10 @@ export default {
   name: 'AppHeader',
   data () {
     return {
-      userInfo: {}
+      userInfo: {
+        // 默认地址
+        portrait: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'
+      }
     }
   },
   // 生命周期函数中不处理具体的业务逻辑
