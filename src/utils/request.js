@@ -22,9 +22,11 @@ const getBaseURL = url => {
 request.interceptors.request.use(config => {
   // 根据config参数的url属性值动态设置baseURL
   config.baseURL = getBaseURL(config.url)
-  // 判断user信息并统一设置token
+  // 判断user信息并统一设置token，对于后端接口来说，没有token也无所谓。依旧可以访问数据
   if (store.state.user && store.state.user.content) {
     config.headers.Authorization = JSON.parse(store.state.user.content).access_token
+  } else {
+    config.headers.Authorization = null
   }
   return config
 })
@@ -35,7 +37,6 @@ const requests = []
 // 设置响应拦截器
 request.interceptors.response.use(response => {
   // 请求成功 状态码为2XX
-  // console.log('response: ', response)
   return response
 }, error => {
   let errorMessage
@@ -46,7 +47,7 @@ request.interceptors.response.use(response => {
     }
     // 刷新token
     if (error.response.status === 401) {
-      // 不存在token
+      // 本地不存在token
       if (!store.state.user) {
         router.push({
           name: 'login',
@@ -65,34 +66,44 @@ request.interceptors.response.use(response => {
       }
       // 存在token但token过期或者不正确
       // 发送请求刷新token
-      isRefreshing = true
-      return request({
-        method: 'POST',
-        url: '/front/user/refresh_token',
-        data: qs.stringify({
-          refreshtoken: JSON.parse(store.state.user.content).refresh_token
+      if (store.state.user && store.state.user.content) {
+        isRefreshing = true
+        return request({
+          method: 'POST',
+          url: '/front/user/refresh_token',
+          data: qs.stringify({
+            refreshtoken: JSON.parse(store.state.user.content || null).refresh_token
+          })
         })
-      })
-        // token刷新成功
-        .then(res => {
-          // 更新token
-          store.commit('setUser', res.data)
-          // 第一个请求重新发送
-          request(error.config)
-          // 其他请求重新发送
-          while (requests.length) {
-            requests.pop()()
+          // token刷新成功
+          .then(res => {
+            // 更新token
+            store.commit('setUser', res.data)
+            // 第一个请求重新发送
+            request(error.config)
+            // 其他请求重新发送
+            while (requests.length) {
+              requests.pop()()
+            }
+          })
+          // token刷新失败
+          .catch(error => {
+            console.log('error: ', error)
+          })
+          // 最终处理
+          .finally(() => {
+            isRefreshing = false
+          })
+          // 不会刷新token，返回登录
+      } else {
+        router.push({
+          name: 'login',
+          query: {
+            redirect: router.currentRoute.redirect
           }
-          console.log('requests: ', requests)
         })
-        // token刷新失败
-        .catch(error => {
-          console.log('error: ', error)
-        })
-        // 最终处理
-        .finally(() => {
-          isRefreshing = false
-        })
+        return Promise.reject(error)
+      }
     }
     if (error.response.status === 403) {
       errorMessage = 'Forbidden'
