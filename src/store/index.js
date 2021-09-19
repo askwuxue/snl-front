@@ -18,6 +18,10 @@ export default new Vuex.Store({
     }
   },
   // 接收异步请求，调用mutations
-  actions: {},
+  actions: {
+    setUser (context) {
+      context.commit('setUser')
+    }
+  },
   modules: {}
 })
