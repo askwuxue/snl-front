@@ -36,7 +36,7 @@
         <el-table-column
           label="操作">
           <template slot-scope="scope">
-            <el-link type="primary" @click="handleEdit($event, scope.$index, scope.row)">编辑</el-link>
+            <el-link type="primary" @click="handleEdit($event, scope.$index, scope.row)" style="margin-right: 10px">编辑</el-link>
             <el-link type="danger"  @click="handleDelete($event, scope.$index, scope.row)">删除</el-link>
           </template>
         </el-table-column>
@@ -122,6 +122,13 @@ export default {
 }
 </script>
 
-<style lang="sass" scoped>
-
+<style lang="scss" scoped>
+// 自定时式样
+::v-deep .cell {
+  text-align: center;
+}
+// TODO element-ui的link颜色不太对
+.el-link.el-link--primary {
+  color: #409eff;
+}
 </style>

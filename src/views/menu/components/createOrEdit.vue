@@ -74,7 +74,9 @@ export default {
         orderNum: '',
         description: '',
         shown: true
-      }
+      },
+      successMsg: '',
+      failedMsg: ''
     }
   },
 
@@ -104,12 +106,14 @@ export default {
       // 2. 发送请求
       const { data: { code, mesg } } = await createMenuList(this.form)
       if (code === '000000') {
-        this.$message.success('添加菜单成功')
+        this.successMsg = this.isEdit ? '编辑成功' : '添加成功'
+        this.$message.success(`${this.successMsg}`)
         this.$router.push({
           path: '/menu'
         })
       } else {
-        this.$message.error(`添加菜单失败,${mesg}`)
+        this.failedMsg = this.isEdit ? '编辑失败' : '编辑成功'
+        this.$message.error(`${this.failedMsg}, ${mesg}`)
       }
     }
   }
