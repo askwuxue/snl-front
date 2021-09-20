@@ -1,5 +1,5 @@
 <template>
-  <div>首页</div>
+  <div>广告位</div>
 </template>
 
 <script>
