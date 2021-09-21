@@ -10,10 +10,10 @@
        class="demo-form-inline">
         <el-form-item label="资源名称" prop="name">
           <el-input
-          v-model="form.name"
-           placeholder="资源名称"
-           clearable
-           ></el-input>
+            v-model="form.name"
+            placeholder="资源名称"
+            clearable
+          ></el-input>
         </el-form-item>
         <el-form-item label="资源路径" prop="url">
           <el-input
@@ -95,6 +95,7 @@
         <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
+          :hide-on-single-page="form.total <= form.size"
           :current-page="form.current"
           :page-sizes="[10, 50, 200, 500]"
           :page-size="10"
@@ -234,5 +235,7 @@ export default {
     text-align: left !important;
     line-height: 100% !important;
   }
-
+  .cell {
+    min-width: 200px;
+  }
 </style>

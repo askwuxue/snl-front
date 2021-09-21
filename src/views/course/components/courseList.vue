@@ -84,6 +84,7 @@
         @current-change="handleCurrentChange"
         :current-page="form.currentPage"
         :page-sizes="[10, 50, 200, 400]"
+        :hide-on-single-page="totalPages <= form.pageSize"
         :page-size="10"
         layout="total, sizes, prev, pager, next, jumper"
         :total="totalPages">
@@ -222,5 +223,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+// 自定义样式
+::v-deep .cell {
+  min-width: 300px;
+}
 </style>
