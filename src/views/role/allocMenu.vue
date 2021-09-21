@@ -90,7 +90,7 @@ export default {
 
     // 保存菜单列表
     async saveMenu () {
-      const { data: { code, data } } = await allocateRoleMenus({
+      const { data: { code, mesg } } = await allocateRoleMenus({
         roleId: this.roleId,
         menuIdList: this.$refs['menu-tree'].getCheckedKeys()
       })
@@ -105,12 +105,18 @@ export default {
             }
           })
         }
-        this.isLoading = true
       } else {
-        alert('保存失败')
+        if (!this.isLoading) {
+          this.$message({
+            type: 'error',
+            message: mesg,
+            onClose: () => {
+              this.isLoading = false
+            }
+          })
+        }
       }
-      // console.log(this.$refs['menu-tree'].getCheckedKeys())
-      console.log('data: ', data)
+      this.isLoading = true
     },
 
     // 清空菜单列表
