@@ -63,10 +63,10 @@
              <el-button
               size="small"
              >分配资源</el-button>
-          </div>
-            <div>
-              <el-button size="small" @click="handleEdit(scope.row)" style="margin-left: 12px; margin-top: 5px">编辑</el-button>
-              <el-button size="small" @click="handleDelete(scope.row)" style="margin-left: 35px; margin-top: 5px">删除</el-button>
+          <!-- </div> -->
+            <!-- <div> -->
+              <el-button size="small" @click="handleEdit(scope.row)">编辑</el-button>
+              <el-button size="small" @click="handleDelete(scope.row)">删除</el-button>
             </div>
           </template>
         </el-table-column>
