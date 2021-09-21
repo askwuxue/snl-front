@@ -44,7 +44,6 @@ export default {
       }
       // 为了在当前作用域之外操作editor对象
       this.editor = editor
-      // editor.txt.html(this.value)
       // 配置触发 onchange 的时间频率，默认为 200ms
       editor.config.onchangeTimeout = 500 // 修改为 500ms
       editor.config.customUploadImg = async (resultFiles, insertImgFn) => {
@@ -52,13 +51,17 @@ export default {
         // insertImgFn 是获取图片 url 后，插入到编辑器的方法
         const formData = new FormData()
         formData.append('file', resultFiles[0])
-        const { data: { code, data: { name } } } = await uploadImg(formData)
+        const { data: { code, mesg, data: { name } } } = await uploadImg(formData)
         // 上传成功
         if (code === '000000') {
         // 上传图片，返回结果，将图片插入到编辑器中
           insertImgFn(name)
           // TODO上传失败
         } else {
+          this.$message({
+            type: 'error',
+            message: mesg
+          })
           alert('上传失败')
         }
       }
