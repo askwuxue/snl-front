@@ -2,6 +2,7 @@
 module.exports = {
   css: {
     loaderOptions: {
+      // 向所有 Sass/Less 样式传入共享的全局变量：
       // 所以这里假设你有 `src/variables.sass` 这个文件
       // 注意：在 sass-loader v8 中，这个选项名是 "prependData"
       // additionalData: '@import "~@/variables.sass"'
