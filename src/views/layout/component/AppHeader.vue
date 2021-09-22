@@ -29,6 +29,7 @@
 
 <script>
 import { getUserInfo } from '@/interface/user'
+import { Message, MessageBox } from 'element-ui'
 export default {
   name: 'AppHeader',
   data () {
@@ -53,7 +54,7 @@ export default {
         this.userInfo = data.content
         // TODO token过期，重新登录
       } catch (err) {
-        this.$message({
+        Message({
           type: 'error',
           message: '获取用户信息失败，请重新登录'
         })
@@ -67,7 +68,7 @@ export default {
     },
     // 退出登录
     handleLogout () {
-      this.$confirm('您将退出登录, 是否继续?', '提示', {
+      MessageBox('您将退出登录, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
@@ -75,13 +76,13 @@ export default {
         // 使用store的mutation清除store的user数据
         this.$store.commit('setUser', null)
         // 页面重定向到登录页面
-        this.$router.push('login')
-        this.$message({
+        this.$router.push('/login')
+        Message({
           type: 'success',
           message: '退出成功!'
         })
       }).catch(() => {
-        this.$message({
+        Message({
           type: 'info',
           message: '已取消退出'
         })

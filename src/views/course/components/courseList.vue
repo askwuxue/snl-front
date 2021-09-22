@@ -96,6 +96,7 @@
 <script>
 import { getQueryCourses, changeState } from '@/interface/course'
 import createCourse from '../create.vue'
+import { Message } from 'element-ui'
 export default {
   name: 'courseList',
   data () {
@@ -179,7 +180,7 @@ export default {
       if (code === '000000') {
         this.loadingCourses()
         row.isLoadingStatus = false
-        this.$message({
+        Message({
           type: 'success',
           message: status === 1 ? '上架成功' : '下架成功'
         })

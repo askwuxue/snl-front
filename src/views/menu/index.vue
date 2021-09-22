@@ -47,6 +47,7 @@
 
 <script>
 import { getAllMenu, deleteMenu } from '@/interface/menu'
+import { Message, MessageBox } from 'element-ui'
 export default {
   data () {
     return {
@@ -85,7 +86,7 @@ export default {
 
     // 删除菜单项
     handleDelete (e, index, row) {
-      this.$confirm('此操作将永久删除该菜单项, 是否继续?', '提示', {
+      MessageBox('此操作将永久删除该菜单项, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
@@ -95,7 +96,7 @@ export default {
           const { data: { code } } = await deleteMenu(row.id)
           // 删除成功
           if (code === '000000') {
-            this.$message({
+            Message({
               type: 'success',
               message: '删除成功!'
             })
@@ -111,7 +112,7 @@ export default {
         }
         // 取消删除
       }).catch(() => {
-        this.$message({
+        Message({
           type: 'info',
           message: '已取消删除'
         })

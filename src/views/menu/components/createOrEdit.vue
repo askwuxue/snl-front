@@ -53,6 +53,7 @@
 
 <script>
 import { getEditMenuInfo, createMenuList } from '@/interface/menu'
+import { Message } from 'element-ui'
 export default {
   props: {
     isEdit: {
@@ -107,13 +108,13 @@ export default {
       const { data: { code, mesg } } = await createMenuList(this.form)
       if (code === '000000') {
         this.successMsg = this.isEdit ? '编辑成功' : '添加成功'
-        this.$message.success(`${this.successMsg}`)
+        Message.success(`${this.successMsg}`)
         this.$router.push({
           path: '/menu'
         })
       } else {
         this.failedMsg = this.isEdit ? '编辑失败' : '编辑成功'
-        this.$message.error(`${this.failedMsg}, ${mesg}`)
+        Message.error(`${this.failedMsg}, ${mesg}`)
       }
     }
   }

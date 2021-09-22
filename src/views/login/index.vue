@@ -31,6 +31,7 @@
 
 <script>
 import { login } from '@/interface/user'
+import { Message } from 'element-ui'
 export default {
   name: 'Login',
 
@@ -69,7 +70,7 @@ export default {
         const { data } = await login(this.ruleForm)
         // 登录成功
         if (data.state === 1) {
-          this.$message({
+          Message({
             message: '恭喜你，登录成功',
             type: 'success',
             onClose: () => {
@@ -82,7 +83,7 @@ export default {
           this.$router.push(this.$route.query.redirect || '/')
           // 登录失败
         } else {
-          this.$message.error({
+          Message.error({
             message: data.message,
             showClose: true,
             // message关闭时回调

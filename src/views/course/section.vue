@@ -55,6 +55,7 @@
 
 <script>
 import { getSectionAndLesson, saveOrUpdate, saveOrUpdateSection } from '@/interface/course'
+import { Message } from 'element-ui'
 export default {
   name: 'courseSection',
   props: {
@@ -115,12 +116,12 @@ export default {
             })
           }
         }))
-        this.$message({
+        Message({
           type: 'success',
           message: '保存成功'
         })
       } catch (error) {
-        this.$message({
+        Message({
           type: 'error',
           message: '保存失败'
         })

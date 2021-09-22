@@ -178,6 +178,7 @@
 import { saveOrUpdateCourse, getCourseById } from '@/interface/course'
 import CourseImg from './courseImg'
 import TextEditor from '@/components/TextEditor'
+import { Message } from 'element-ui'
 export default {
   name: 'createOrEdit',
   props: {
@@ -321,7 +322,7 @@ export default {
     async saveCourse () {
       const { data: { code } } = await saveOrUpdateCourse(this.course)
       if (code === '000000') {
-        this.$message({
+        Message({
           type: 'success',
           message: this.isEdit === true ? '编辑成功' : '创建课程成功'
         })

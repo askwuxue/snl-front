@@ -5,6 +5,7 @@
 <script>
 import E from 'wangeditor'
 import { uploadImg } from '@/interface/course'
+import { Message } from 'element-ui'
 export default {
   name: 'TextEditor',
   props: {
@@ -58,7 +59,7 @@ export default {
           insertImgFn(name)
           // TODO上传失败
         } else {
-          this.$message({
+          Message({
             type: 'error',
             message: mesg
           })

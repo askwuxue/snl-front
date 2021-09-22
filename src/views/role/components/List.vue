@@ -79,6 +79,7 @@
 <script>
 import { getAll, deleteRole } from '@/interface/role'
 import createOrEdit from './createOrEdit.vue'
+import { Message, MessageBox } from 'element-ui'
 export default {
   components: { createOrEdit },
   name: 'roleList',
@@ -123,7 +124,7 @@ export default {
 
     // 删除角色信息
     handleDelete ({ id }) {
-      this.$confirm('此操作将删除该角色, 是否继续?', '提示', {
+      MessageBox('此操作将删除该角色, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
@@ -133,7 +134,7 @@ export default {
         if (code === '000000' && data === true) {
           // 如果正在加载则不弹框
           if (!this.isDeleting) {
-            this.$message({
+            Message({
               type: 'success',
               message: '删除成功!',
               onClose: () => {
@@ -150,7 +151,7 @@ export default {
           alert('角色删除失败')
         }
       }).catch(() => {
-        this.$message({
+        Message({
           type: 'info',
           message: '已取消删除'
         })

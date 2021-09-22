@@ -54,6 +54,7 @@ import {
   aliyunTransCode,
   aliyunTransCodePercent
 } from '@/interface/aliyun-upload'
+import { Message } from 'element-ui'
 export default {
   name: 'courseVideo',
   data () {
@@ -166,7 +167,7 @@ export default {
               this.TransPercentage = data
               if (data === 100) {
                 this.isUploadAndTrans = false
-                this.$message({
+                Message({
                   type: 'success',
                   message: '视频上传转码成功'
                 })

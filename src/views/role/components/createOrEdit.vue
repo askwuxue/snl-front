@@ -37,6 +37,7 @@
 
 <script>
 import { saveOrUpdate, getRole } from '@/interface/role'
+import { Message } from 'element-ui'
 export default {
   name: 'createOrEdit',
   props: {
@@ -77,7 +78,7 @@ export default {
       // console.log('this.isEdit: ', this.isEdit)
       if (this.isEdit) {
         if (code === '000000') {
-          this.$message({
+          Message({
             type: 'success',
             message: '更新角色成功!'
           })
@@ -93,7 +94,7 @@ export default {
       } else {
         // 添加角色成功
         if (code === '000000') {
-          this.$message({
+          Message({
             type: 'success',
             message: '添加角色成功!'
           })

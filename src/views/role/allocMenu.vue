@@ -25,6 +25,7 @@
 
 <script>
 import { getMenuNodeList, allocateRoleMenus, getRoleMenus } from '@/interface/menu'
+import { Message } from 'element-ui'
 export default {
   name: 'allocMenu',
   props: {
@@ -97,7 +98,7 @@ export default {
       // 保存成功
       if (code === '000000') {
         if (!this.isLoading) {
-          this.$message({
+          Message({
             type: 'success',
             message: '保存成功',
             onClose: () => {
@@ -107,7 +108,7 @@ export default {
         }
       } else {
         if (!this.isLoading) {
-          this.$message({
+          Message({
             type: 'error',
             message: mesg,
             onClose: () => {

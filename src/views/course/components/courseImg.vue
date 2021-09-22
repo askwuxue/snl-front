@@ -25,6 +25,7 @@
 
 <script>
 import { uploadImg } from '@/interface/course'
+import { Message } from 'element-ui'
 
 export default {
   name: 'CourseImg',
@@ -55,10 +56,10 @@ export default {
       const isLimit = file.size / 1024 / 1024 > this.limit
 
       // if (!isJPG) {
-      //   this.$message.error('上传头像图片只能是 JPG 格式!')
+      //   Message.error('上传头像图片只能是 JPG 格式!')
       // }
       if (isLimit) {
-        this.$message.error('上传头像图片大小不能超过 2MB!')
+        Message.error('上传头像图片大小不能超过 2MB!')
       }
       // TODO 返回false http-request属性不会生效
       return !isLimit

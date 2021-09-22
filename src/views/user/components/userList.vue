@@ -101,6 +101,7 @@
 <script>
 import { getUserPages } from '@/interface/user'
 import { getAllRoles, allocateUserRoles, getUserRoles } from '@/interface/role'
+import { Message } from 'element-ui'
 export default {
   name: 'userList',
   data () {
@@ -193,7 +194,7 @@ export default {
         roleIdList: this.roleIdList
       })
       if (code === '000000') {
-        this.$message({
+        Message({
           type: 'success',
           message: '分配角色成功'
         })
