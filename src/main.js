@@ -4,10 +4,8 @@ import router from './router'
 import store from './store'
 
 // 引入Element
-import ElementUI from 'element-ui'
-
-// 引入主题文件
-// import 'element-ui/lib/theme-chalk/index.css'
+// import ElementUI from 'element-ui'
+import ElementUI from '@/components/element-config'
 
 // 引入公共样式
 import '../src/styles/index.scss'
