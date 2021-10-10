@@ -42,8 +42,10 @@ export default {
       // 是否加载中
       isLoding: false,
       ruleForm: {
-        phone: '18201288771',
-        password: '111111'
+        // 18201288771
+        // 111111
+        phone: '',
+        password: ''
       },
       rules: {
         phone: [
