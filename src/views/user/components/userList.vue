@@ -48,8 +48,10 @@
             label="手机号">
           </el-table-column>
           <el-table-column
-            prop="createTime"
             label="注册时间">
+            <template slot-scope="scope">
+              <span>{{scope.row.createTime | formatDate}}</span>
+            </template>
           </el-table-column>
           <!-- TODO 封禁用户 -->
           <el-table-column

@@ -43,8 +43,10 @@
           label="描述">
         </el-table-column>
         <el-table-column
-          prop="createdTime"
           label="添加时间">
+          <template slot-scope="scope">
+              <span>{{scope.row.createdTime | formatDate}}</span>
+            </template>
         </el-table-column>
         <el-table-column
           label="操作"
