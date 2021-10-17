@@ -138,9 +138,10 @@ router.beforeEach((to, from, next) => {
       })
     }
     return next()
-  } else {
-    console.log('不需要认证')
   }
+  // else {
+  //   console.log('不需要认证')
+  // }
   next()
 })
 
